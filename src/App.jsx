@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './config/firebase';
 import { useAuthStore } from './store/useAuthStore';
-import { useBudgetStore } from './store/UseBudgetStore';
+import { useBudgetStore } from "./store/useBudgetStore";
 import PlannerPage from './pages/PlannerPage';
 import ReviewsPage from './pages/ReviewsPage';
 import Navbar from './components/Navbar';
