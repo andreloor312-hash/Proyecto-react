@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# agent-harness-kit
+.harness/harness.db
+.harness/harness.db-shm
+.harness/harness.db-wal

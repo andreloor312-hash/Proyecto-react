@@ -1,0 +1,35 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "lead",
+  "compaction": {
+    "auto": true,
+    "buffer": 10000
+  },
+  "permissions": [
+    {
+      "action": "edit",
+      "resource": "*",
+      "effect": "ask"
+    },
+    {
+      "action": "external_directory",
+      "resource": "*",
+      "effect": "ask"
+    }
+  ],
+  "mcp": {
+    "servers": {
+      "agent-harness-kit": {
+        "type": "local",
+        "command": [
+          "ahk",
+          "serve",
+          "--port",
+          "3742"
+        ],
+        "disabled": false,
+        "codemode": false
+      }
+    }
+  }
+}
