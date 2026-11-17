@@ -1,103 +1,56 @@
-import { Link } from 'react-router-dom';
-import {
-  Container,
-  Group,
-  Title,
-  Button,
-  Text,
-  Box,
-  Avatar,
-  Menu,
-  ThemeIcon,
-} from '@mantine/core';
-import {
-  IconCompass,
-  IconLogout,
-  IconStar,
-  IconMap,
-  IconChevronDown,
-} from '@tabler/icons-react';
+import { Container, Group, Title, Button, Text, Badge, Box } from '@mantine/core';
+import { IconCompass, IconLogout, IconUser } from '@tabler/icons-react';
 import { useAuthStore } from '../store/useAuthStore';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   const { user, openAuthModal, logout } = useAuthStore();
 
-  const nombreUsuario = user?.displayName || user?.email?.split('@')[0] || 'Viajero';
-
   return (
-    <Box
-      component="header"
-      py="sm"
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
-        backgroundColor: 'rgba(11, 8, 9, 0.94)',
-        backdropFilter: 'blur(10px)',
-        borderBottom: '1px solid #3a2d30',
-      }}
-    >
+    <Box component="header" py="md" style={{ borderBottom: '1px solid #e9ecef' }}>
       <Container size="xl">
         <Group justify="space-between">
-          {/* Izquierda: Logo + Navegación */}
-          <Group gap="lg">
-            <Group gap="xs" component={Link} to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <ThemeIcon size="lg" radius="md" variant="gradient" gradient={{ from: '#520915', to: '#b81d33' }}>
-                <IconCompass size={22} color="#e4c163" />
-              </ThemeIcon>
-              <Title order={4} c="gold.1" style={{ letterSpacing: '-0.5px' }}>
-                Ruta<Text span c="gold.4" inherit>Ecuador</Text>
-              </Title>
-            </Group>
-
-            <Group gap="xs" visibleFrom="xs">
-              <Button component={Link} to="/" variant="subtle" color="gold" size="sm" leftSection={<IconMap size={16} />}>
-                Destinos
+          {/* Logo / Nombre de la plataforma */}
+          <Group gap="xs">
+            <IconCompass size={28} color="#228be6" />
+            <Title order={4}>RutaEcuador</Title>
+            <Badge variant="dot" color="green" visibleFrom="xs">
+              Planificador Oficial
+            </Badge>
+            <Group gap="xs" ml="md">
+              <Button component={Link} to="/" variant="subtle" size="xs">
+                Planificador
               </Button>
-              <Button component={Link} to="/resenas" variant="subtle" color="gold" size="sm" leftSection={<IconStar size={16} />}>
+              <Button component={Link} to="/resenas" variant="subtle" size="xs">
                 Reseñas
+              </Button>
+              <Button component={Link} to="/mapas" variant="subtle" size="xs">
+                Mapas de Ecuador
               </Button>
             </Group>
           </Group>
 
-          {/* Derecha: Perfil o Botón de Acceso */}
+          {/* Controles de sesión dinámicos */}
           {user ? (
-            <Menu shadow="md" width={200} position="bottom-end">
-              <Menu.Target>
-                <Button variant="subtle" color="gold" px="xs">
-                  <Group gap="xs">
-                    <Avatar color="wine" radius="xl" size="sm">
-                      <Text c="gold.3" fw={700} size="xs">
-                        {nombreUsuario[0].toUpperCase()}
-                      </Text>
-                    </Avatar>
-                    <Text size="sm" fw={600} c="gold.2" visibleFrom="xs">
-                      {nombreUsuario}
-                    </Text>
-                    <IconChevronDown size={14} color="#e4c163" />
-                  </Group>
-                </Button>
-              </Menu.Target>
-
-              <Menu.Dropdown>
-                <Menu.Label c="gold.4">Cuenta de Viajero</Menu.Label>
-                <Menu.Item component={Link} to="/resenas" c="gold.1" leftSection={<IconStar size={14} color="#d4af37" />}>
-                  Mis Reseñas
-                </Menu.Item>
-                <Menu.Divider />
-                <Menu.Item color="red" leftSection={<IconLogout size={14} />} onClick={logout}>
-                  Cerrar Sesión
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
+            <Group>
+              <Group gap="xs">
+                <IconUser size={18} />
+                <Text size="sm" fw={500}>
+                  {user.displayName || user.email}
+                </Text>
+              </Group>
+              <Button
+                variant="subtle"
+                color="red"
+                size="xs"
+                leftSection={<IconLogout size={16} />}
+                onClick={logout}
+              >
+                Salir
+              </Button>
+            </Group>
           ) : (
-            <Button
-              size="sm"
-              variant="gradient"
-              gradient={{ from: '#720e1e', to: '#b81d33' }}
-              c="gold.1"
-              onClick={openAuthModal}
-            >
+            <Button size="sm" onClick={openAuthModal}>
               Iniciar Sesión / Registrarse
             </Button>
           )}
